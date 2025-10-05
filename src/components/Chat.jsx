@@ -30,7 +30,8 @@ export default function Chat() {
       text: msg,
       time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
     }
-    setMessages([...messages, newMessage])
+    user.messages.push(newMessage)
+    // sincronizar la lista de usuarios en la base de datos, incorporando localstorage.
     setMsg("")
   }
 
