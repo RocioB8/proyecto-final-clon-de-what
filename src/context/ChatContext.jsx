@@ -15,7 +15,7 @@ const ChatProvider = ({ children }) => {
           id: 1,
           text: "Hola, como estas?",
           time: "00:40"
-        }
+        } 
       ]
     },
     {

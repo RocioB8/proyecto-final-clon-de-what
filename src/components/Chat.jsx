@@ -12,10 +12,11 @@ export default function Chat() {
 
   if (!user) {
     return (
-      <p>No hay usuario seleccionado...</p>
+      <div className="user-not-found">
+        <p>No hay usuario seleccionado...</p>
+      </div>
     )
   }
-
   // menejador del cambio del input
   const handleChange = (event) => {
     setMsg(event.target.value)
@@ -29,7 +30,6 @@ export default function Chat() {
       text: msg,
       time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
     }
-
     setMessages([...messages, newMessage])
     setMsg("")
   }
@@ -70,7 +70,7 @@ export default function Chat() {
       <footer className="chat-footer">
         <form onSubmit={handleSubmit}>
           <input
-            type="text"
+              type="text"
             placeholder="Enter text here..."
             onChange={handleChange}
             value={msg}
