@@ -1,9 +1,13 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useChat } from "../context/ChatContext"
 
 export default function Sidebar() {
   const { users, setSelectedUser } = useChat()
   const [usersToRender, setUsersToRender] = useState(users) 
+  // Cada vez que cambien los usuarios glóbales, actualizamos la lista a renderizar
+  useEffect(() => {
+    setUsersToRender(users)
+  }, [users])
 
   const handleChange = (event) => {
     const result = users.filter((user) => user.name.toLowerCase().includes(event.target.value.toLowerCase()))

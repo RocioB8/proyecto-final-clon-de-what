@@ -4,7 +4,7 @@ import { useChat } from "../context/ChatContext"
 export default function Chat() {
   const [msg, setMsg] = useState("")
 
-  const { users, selectedUser } = useChat()
+  const { users, selectedUser, setUsers } = useChat()
 
   const user = users.find(u => u.id === selectedUser)
 
@@ -30,8 +30,20 @@ export default function Chat() {
       text: msg,
       time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
     }
-    user.messages.push(newMessage)
-    // sincronizar la lista de usuarios en la base de datos, incorporando localstorage.
+    // Actualizamos el estado de manera Imputable
+    const updateUsers = users.map((u) => {
+      if (u.id === user.id) {
+        // Si el usuario es el mismo que el seleccionado, devolvemos una copia de su objeto con los msj actualizados.
+        return {
+          ...u,
+          messages : [...u.messages, newMessage]
+        }
+      } else {
+        // Si no es el usuario seleccionado, lo devolvemos tal cual.
+        return u 
+      }
+    })
+    setUsers(updateUsers) //esto dispara el useEffect del contexto que guarda localStorage.
     setMsg("")
   }
 
