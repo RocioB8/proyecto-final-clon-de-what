@@ -71,7 +71,22 @@
   border: 2px solid #ddd;
 }
 
-/* end user list */
+
+.logout-button {
+  width: 100%;
+  padding: 10px;
+  text-align: left;
+  font-weight: 500;
+  color: #c90000;
+  background-color: transparent;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #eee;
+}
 
 .chat {
   flex: 1;
@@ -79,11 +94,11 @@
   flex-direction: column;
 }
 
-.user-not-found{
-flex: 1;
-display: flex;
-justify-content: center;
-align-items: center;
+.user-not-found {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .chat-header {

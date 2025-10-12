@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect, use } from "react"
 import { useNavigate } from "react-router-dom"
 import logo from "../assets/images/logo.png"
 
@@ -11,6 +11,13 @@ const Login = () => {
   const navigate = useNavigate()
 
   const PASS = "pepe123"
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn")
+    if (isLoggedIn === "true") {
+      navigate("/chat")
+    }
+  }, [])
 
   const validatePassword = () => {
     setMessage(null)
