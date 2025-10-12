@@ -17,6 +17,7 @@ const Login = () => {
     setError(null)
 
     if (password === PASS) {
+      localStorage.setItem("isLoggedIn", JSON.stringify(true))
       setMessage("Contraseña valida, serás redirigido.")
       setTimeout(() => {
         navigate("/chat")
@@ -52,7 +53,7 @@ const Login = () => {
         {message && <p style={{ color: "green" }}>{message}</p>}
 
         {error && <p style={{ color: "red" }}>{error}</p>}
- 
+
       </form>
       <p className="text-info">Acceso restringido • Contenido privado</p>
     </main>

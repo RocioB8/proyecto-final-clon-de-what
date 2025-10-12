@@ -17,7 +17,7 @@ export default function Chat() {
       </div>
     )
   }
-  // menejador del cambio del input
+  
   const handleChange = (event) => {
     setMsg(event.target.value)
   }
@@ -30,7 +30,6 @@ export default function Chat() {
       text: msg,
       time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
     }
-    // Actualizamos el estado de manera Imputable
     const updateUsers = users.map((u) => {
       if (u.id === user.id) {
         // Si el usuario es el mismo que el seleccionado, devolvemos una copia de su objeto con los msj actualizados.
@@ -43,7 +42,7 @@ export default function Chat() {
         return u 
       }
     })
-    setUsers(updateUsers) //esto dispara el useEffect del contexto que guarda localStorage.
+    setUsers(updateUsers) 
     setMsg("")
   }
 

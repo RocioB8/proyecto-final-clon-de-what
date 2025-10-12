@@ -4,16 +4,10 @@ import { isRouteErrorResponse } from "react-router-dom"
 const ChatContext = createContext()
 
 const ChatProvider = ({ children }) => {
-  // 1. Estado de usuarios
-  // Inicializamos vacío, luego lo cargamos de localStorage o mock.
   const [users, setUsers] = useState([])
-  // 2. Estado del usuario seleccionado
   const [selectedUser, setSelectedUser] = useState(null)
-  // 3. Al montar el provider, revisamos si hay usuarios guardados en el localStorage:
-  //  - si existen, los usamoss
-  // - si no existen, cargamos los mock iniciales.
+  
   useEffect(() => {
-
     const storedUsers = localStorage.getItem("users")
 
     if (storedUsers !== null) {
