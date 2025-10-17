@@ -1,12 +1,19 @@
 import { useState } from "react"
 import { useChat } from "../context/ChatContext"
+import { useTheme } from "../context/ThemeContext"
+import { useNavigate } from "react-router-dom"
+useNavigate
 
 export default function Chat() {
   const [msg, setMsg] = useState("")
+  const [showPopup, setshowPopup] = useState(false)
 
-  const { users, selectedUser, setUsers } = useChat()
+  const { users, selectedUser, setUsers, setSelectedUser } = useChat()
 
+  const { theme, actualizarTema } = useTheme()
+  const navigate = useNavigate()
   const user = users.find(u => u.id === selectedUser)
+
 
   console.log(user)
 
@@ -17,7 +24,7 @@ export default function Chat() {
       </div>
     )
   }
-  
+
   const handleChange = (event) => {
     setMsg(event.target.value)
   }
@@ -35,61 +42,96 @@ export default function Chat() {
         // Si el usuario es el mismo que el seleccionado, devolvemos una copia de su objeto con los msj actualizados.
         return {
           ...u,
-          messages : [...u.messages, newMessage]
+          messages: [...u.messages, newMessage]
         }
       } else {
         // Si no es el usuario seleccionado, lo devolvemos tal cual.
-        return u 
+        return u
       }
     })
-    setUsers(updateUsers) 
+    setUsers(updateUsers)
     setMsg("")
   }
 
+  const handleShowPopup = () => {
+    setshowPopup(true)
+  }
+  const handleClosePopup = () => {
+    setshowPopup(false)
+  }
+  const handleHelpClick = () => {
+    navigate("/help")
+  }
+
+  const handleGoBack = () => {
+    setSelectedUser(null) // Esto deselecciona el usuario
+  }
+
+
   return (
-    <div className="chat">
-      <header className="chat-header">
-        <div>
-          <div className="chat-user">
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4YreOWfDX3kK-QLAbAL4ufCPc84ol2MA8Xg&s"
-              alt="Aiden Chavez"
-              className="chat-avatar"
-            />
-            <strong>{user.name}</strong>
-            {user.lastSeen !== "" && <span className="last-seen">Last seen: {user.lastSeen}</span>}
+    <>
+      {
+        showPopup === true && <section className="cont-popup">
+          <div className="popup">
+            <h2> ⚙ Configuración</h2>
+            <hr />
+            <button className="theme-button" onClick={() => actualizarTema("claro")}>💡Light</button>
+            <button className="theme-button" onClick={() => actualizarTema("oscuro")}>🌜 Dark</button>
+            <hr />
+            <button onClick={handleClosePopup}>🚪 Cerrar</button>
           </div>
-        </div>
+        </section>
+      }
+      <div className="chat">
 
-        <div className="chat-actions">
-          <button title="Camera">📷</button>
-          <button title="Gallery">🖼️</button>
-          <button title="Settings">⚙️</button>
-          <button title="Help">❓</button>
-        </div>
-      </header>
+        <header className="chat-header">
+          <div className="chat-info">
+            <button onClick={handleGoBack} className="back-button" title="Volver a contactos">
+              ⬅
+            </button>
+
+            <div className="chat-user">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4YreOWfDX3kK-QLAbAL4ufCPc84ol2MA8Xg&s"
+                alt="Aiden Chavez"
+                className="chat-avatar"
+              />
+              <strong>{user.name}</strong>
+              {user.lastSeen !== "" && <span className="last-seen">Last seen: {user.lastSeen}</span>}
+            </div>
+          </div>
+
+          <div className="chat-actions">
+            <button title="Camera">📷</button>
+            <button title="Gallery">🖼️</button>
+            <button title="Settings" onClick={handleShowPopup}>⚙️</button>
+            <button onClick={handleHelpClick} title="Help">❓</button>
+          </div>
+        </header>
 
 
-      <section className="chat-messages">
-        {
-          user.messages.map((message) => <div className="message">
-            <p>{message.text}</p>
-            <span className="time">{message.time}</span>
-          </div>)
-        }
-      </section>
+        <section className="chat-messages">
+          {
+            user.messages.map((message) => <div className="message" key={message.id}>
+              <p>{message.text}</p>
+              <span className="time">{message.time}</span>
+            </div>)
+          }
+        </section>
 
-      <footer className="chat-footer">
-        <form onSubmit={handleSubmit}>
-          <input
+        <footer className="chat-footer">
+          <form onSubmit={handleSubmit}>
+            <input
               type="text"
-            placeholder="Enter text here..."
-            onChange={handleChange}
-            value={msg}
-          />
-          <button>➤</button>
-        </form>
-      </footer>
-    </div>
+              placeholder="Enter text here..."
+              onChange={handleChange}
+              value={msg}
+            />
+            <button>➤</button>
+          </form>
+        </footer>
+      </div>
+
+    </>
   )
 }

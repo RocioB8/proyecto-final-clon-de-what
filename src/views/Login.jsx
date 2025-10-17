@@ -1,6 +1,7 @@
 import { useState, useEffect, use } from "react"
 import { useNavigate } from "react-router-dom"
 import logo from "../assets/images/logo.png"
+import { useTheme } from "../context/ThemeContext"
 
 const Login = () => {
   const [password, setPassword] = useState()
@@ -9,6 +10,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
 
   const navigate = useNavigate()
+  const {theme} = useTheme()
 
   const PASS = "pepe123"
 
@@ -44,7 +46,7 @@ const Login = () => {
   }
 
   return (
-    <main className="login-main">
+    <main className= "login-main">
       <img width={100} src={logo} alt="logo de whatsapp" />
       <h1>Clon de Whatsapp</h1>
       <form onSubmit={handleSubmit}>

@@ -34,8 +34,8 @@ export default function Sidebar() {
       }
       <ul className="user-list">
         {
-          usersToRender.map(user => <li onClick={() => setSelectedUser(user.id)} className="user">
-            <img className="avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4YreOWfDX3kK-QLAbAL4ufCPc84ol2MA8Xg&s" alt="" />
+          usersToRender.map(user => <li key={user.id} onClick={() => setSelectedUser(user.id)} className="user">
+            <img className="avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4YreOWfDX3kK-QLAbAL4ufCPc84ol2MA8Xg&s" alt=""/>
             <div></div>
             <div className="user-info">
               <strong>
